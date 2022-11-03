@@ -1,2 +1,2 @@
 # jwt
--
+Arweave JWT Authenticator
