@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import './App.css';
+import Arweave from 'arweave';
 
 
 
@@ -39,23 +40,61 @@ function App() {
   }, [])
 
 
+
+
+
+
+  // connect to arweave
+  const arweave = Arweave.init({});
+
+
+  // generate arweave wallet
+  arweave.wallets.generate().then((key) => {
+  console.log(key);
+
+    // get wallet address private key
+    arweave.wallets.jwkToAddress(key).then((address) => {
+    console.log(address);
+
+      // get address balance
+      arweave.wallets.getBalance(address).then((balance) => {
+        let winston = balance;
+        let ar = arweave.ar.winstonToAr(balance);
+        console.log(winston);
+        console.log(ar);
+
+      });
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
   return (
-    <div class="app">
+    <div className="app">
 
-      <div class='signInDiv' id='signInDiv'></div>
-      <h1 class='large-title' id='signInText'>Arweave JWT Authenticator</h1>
+      <div className='signInDiv' id='signInDiv'></div>
+      <h1 className='large-title' id='signInText'>Arweave JWT Authenticator</h1>
 
-      <img class='favicon' src='favicon.png'></img>
+      <img className='favicon' src='favicon.png'></img>
 
       { Object.keys(user).length != 0 &&
-      <button class='signOutButton' onClick={ (e) => handleSignOut(e)}>Sign Out</button>
+      <button className='signOutButton' onClick={ (e) => handleSignOut(e)}>Sign Out</button>
       }
 
       { user && 
-      <div class='profile'>
-        <img class='user-picture' src={user.picture}></img>
-        <h3 class='user-name'>{user.name}</h3>
-        <p class='raw-jwt'></p>
+      <div className='profile'>
+        <img className='user-picture' src={user.picture}></img>
+        <h3 className='user-name'>{user.name}</h3>
+        <p className='raw-jwt'></p>
       </div>
       }
 
