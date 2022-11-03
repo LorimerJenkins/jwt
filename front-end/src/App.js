@@ -14,11 +14,13 @@ function App() {
     console.log(userObject);
     setUser(userObject);
     document.getElementById('signInDiv').hidden = true;
+    document.getElementById('signInText').hidden = true;
   }
 
   function handleSignOut(event) {
     setUser({})
     document.getElementById('signInDiv').hidden = false;
+    document.getElementById('signInText').hidden = false;
   }
 
   useEffect(() => {
@@ -33,27 +35,32 @@ function App() {
       { theme: 'outline', size: 'large' }
     );
 
-    google.accounts.id.prompt()
-
 
   }, [])
 
 
   return (
-    <div className="App">
+    <div class="app">
 
-      <div id='signInDiv'></div>
+      <div class='signInDiv' id='signInDiv'></div>
+      <h1 class='large-title' id='signInText'>Arweave JWT Authenticator</h1>
+
+      <img class='favicon' src='favicon.png'></img>
 
       { Object.keys(user).length != 0 &&
-      <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
+      <button class='signOutButton' onClick={ (e) => handleSignOut(e)}>Sign Out</button>
       }
 
       { user && 
-      <div>
-        <img src={user.picture}></img>
-        <h3>{user.name}</h3>
+      <div class='profile'>
+        <img class='user-picture' src={user.picture}></img>
+        <h3 class='user-name'>{user.name}</h3>
+        <p class='raw-jwt'></p>
       </div>
       }
+
+      
+
 
     </div>
   );
