@@ -59,7 +59,7 @@
   align-items: center;
   background-color: white;
   color: black;
-  /* display: none; */
+  display: none;
 
   width: 200px;
   padding: 50px;
@@ -83,14 +83,15 @@
   font-weight: bold;
 }
 .address {
-  font-size: 12px;
+  font-size: 11px;
   word-break: break-all;
   text-align: center;
   margin-top: 10px;
 }
 .balance {
-  font-size: 12px;
+  font-size: 11px;
   margin-top: 0;
+  margin-bottom: 13px;
 }
 
 .saveTextDiv {
@@ -106,6 +107,7 @@
   outline: none;
   padding: 7px;
   border: 1px solid black;
+
 }
 .submit-TXN {
   background-color: black;

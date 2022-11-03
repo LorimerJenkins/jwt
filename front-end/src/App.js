@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import './App.css';
 import Arweave from 'arweave';
+import { dataTransaction } from './interactWithAR.js';
 
 import { identify } from './JWT_identifier.js';
-
-import { dataTransaction } from './interactWithAR.js';
 
 
 function App() {
@@ -58,8 +57,7 @@ function App() {
   // connect to arweave
   const arweave = Arweave.init({});
 
-  const [ key, setKey ] = useState({});
-
+  // const [ key, setKey ] = useState({});
     
   // // identify(JWT)
 
@@ -77,23 +75,22 @@ function App() {
   // }
 
 
-  // // get wallet address private key
-  // const [ address, setAddress ] = useState({});
-  // arweave.wallets.jwkToAddress(key).then((address) => {
-  // setAddress(address)});
-
-  // // get address balance
-  // const [ balance, setBalance ] = useState({});
-  // arweave.wallets.getBalance(address).then((balance) => {
-  // let ar = arweave.ar.winstonToAr(balance);
-  // setBalance(ar)});
 
 
+  // temp my key
+  var key = require('./test_key.json');
 
 
+  // get wallet address private key
+  const [ address, setAddress ] = useState({});
+  arweave.wallets.jwkToAddress(key).then((address) => {
+  setAddress(address)});
 
-
-
+  // get address balance
+  const [ balance, setBalance ] = useState({});
+  arweave.wallets.getBalance(address).then((balance) => {
+  let ar = arweave.ar.winstonToAr(balance);
+  setBalance(ar)});
 
 
 
@@ -102,7 +99,7 @@ function App() {
     <div className="app">
 
       <div className='signInDiv' id='signInDiv'></div>
-      {/* <h1 className='large-title' id='signInText'>Arweave JWT Authenticator</h1> */}
+      <h1 className='large-title' id='signInText'>Arweave JWT Authenticator</h1>
       <img className='favicon' src='favicon.png'></img>
 
 
@@ -112,25 +109,20 @@ function App() {
 
 
       <div className='profile' id='profile'>
-        {/* <img className='user-picture' src={user.picture}></img>
+        <img className='user-picture' src={user.picture}></img>
         <h3 className='user-name'>{user.name}</h3>
-        <p className='user-name'>{user.email}</p> */}
-        <img className='user-picture' src='https://jwt.lorimerjenkins.com/favicon.png'></img>
-        <h3 className='user-name'>Lorimer Jenkins</h3>
-        <p className='user-email'>lorimer@wallety.org</p>
+        <p className='user-email'>{user.email}</p>
 
-        {/* <p className='address'>{JSON.stringify(address)}0000000000000000</p>
-        <p className='balance'>Current Balance: {JSON.stringify(balance)}AR</p> */}
         <p className='address'>
-          <span className='bold'>Wallet Address: </span>JJegjyFmwiZuII7bdDFnxpT5Hackam4t2cm3bC6gAq4
+          <span className='bold'>Wallet Address: </span>{JSON.stringify(address)}
         </p>
         <p className='balance'>
-          <span className='bold'>Current Balance: </span>10.434 AR
+          <span className='bold'>Current Balance: </span>{JSON.stringify(balance)} AR
         </p>
 
         <div className='saveTextDiv'>
-          <input className='input' type="text" placeholder='Text to Permaweb' id='input'></input>
-          <button className='submit-TXN'>Submit Transaction</button>
+          <input className='input' placeholder='Text to Permaweb' id='input' type="text/number/something-other-than-password" name="x-field-w" autoComplete="new-field-w"></input>
+          <button className='submit-TXN' onClick={() => dataTransaction(key)}>Submit Transaction</button>
         </div>
 
       </div>
@@ -144,3 +136,4 @@ function App() {
 }
 
 export default App;
+
