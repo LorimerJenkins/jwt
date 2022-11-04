@@ -54,9 +54,22 @@ function App() {
   // connect to arweave
   const arweave = Arweave.init({});
 
-  
 
-  url = 'https://lorimer0jwt.pythonanywhere.com/check_key/?email=lorimer@wallety.org&&key=1234'
+
+  async function key_check(email, key1) {
+
+    const url = 'https://lorimer0jwt.pythonanywhere.com/check_key/?email=' + email + '&&key=' + key1
+    const response = await fetch(url);
+    const response_json = await response.json();
+    const key2 = await response_json.response
+
+    console.log(key2)
+  
+  }
+
+  // key_check(user.email, '12345')
+
+
 
 
   // check if client has already a key
