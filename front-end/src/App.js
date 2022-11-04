@@ -19,7 +19,7 @@ function App() {
     setUser(userObject);
     
     document.getElementById('signInDiv').hidden = true;
-    document.getElementById('signInText').hidden = true;
+    // document.getElementById('signInText').hidden = true;
     document.getElementById('profile').style.display = 'flex'
   }
 
@@ -53,6 +53,10 @@ function App() {
   
   // connect to arweave
   const arweave = Arweave.init({});
+
+  
+
+  url = 'https://lorimer0jwt.pythonanywhere.com/check_key/?email=lorimer@wallety.org&&key=1234'
 
 
   // check if client has already a key
@@ -98,7 +102,7 @@ function App() {
     <div className="app">
 
       <div className='signInDiv' id='signInDiv'></div>
-      <h1 className='large-title' id='signInText'>Arweave JWT Authenticator</h1>
+      {/* <h1 className='large-title' id='signInText'>Arweave JWT Authenticator</h1> */}
       <img className='favicon' src='favicon.png'></img>
 
 
