@@ -3,8 +3,7 @@ import jwtDecode from 'jwt-decode';
 import './App.css';
 import Arweave from 'arweave';
 import { dataTransaction } from './interactWithAR.js';
-
-import { identify } from './JWT_identifier.js';
+import Records from './database.json'
 
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
     document.getElementById('signInText').hidden = true;
     document.getElementById('profile').style.display = 'flex'
   }
-
 
 
 
@@ -53,44 +51,45 @@ function App() {
 
 
   
-
   // connect to arweave
   const arweave = Arweave.init({});
 
-  // const [ key, setKey ] = useState({});
-    
-  // // identify(JWT)
 
-  // if JWT func check {
-
-  //   // get key from a file
-
+  // check if client has already a key
+  // const clientEmail = user.email
+  // if (clientEmail in Records) {
+  //   const key = Records[clientEmail]
   // } else {
-
-  // // generate arweave wallet and then apply the key to the wallet
-  // arweave.wallets.generate().then((key) => {
-  //   setKey(key)
-  // });
-
+  //   const key = Records['lorimer@wallety.org']
   // }
 
 
 
+// generate wallet
+  // arweave.wallets.generate().then((key) => {
+  //   console.log(key)
+  // });
 
-  // temp my key
-  var key = require('./test_key.json');
 
+
+  // temp key
+  const clientEmail = 'lorimer@wallety.org'
+  // const clientEmail = 'lorimerjenkins1@gmail.com'
+
+  const key = Records[clientEmail]
 
   // get wallet address private key
   const [ address, setAddress ] = useState({});
   arweave.wallets.jwkToAddress(key).then((address) => {
-  setAddress(address)});
+  setAddress(address)
+  document.getElementById('address').innerHTML = address
+});
 
   // get address balance
-  const [ balance, setBalance ] = useState({});
   arweave.wallets.getBalance(address).then((balance) => {
   let ar = arweave.ar.winstonToAr(balance);
-  setBalance(ar)});
+  document.getElementById('balance').innerHTML = ar
+});
 
 
 
@@ -114,10 +113,12 @@ function App() {
         <p className='user-email'>{user.email}</p>
 
         <p className='address'>
-          <span className='bold'>Wallet Address: </span>{JSON.stringify(address)}
+          <span className='bold'>Wallet Address: </span>
+          <span id='address'></span>
         </p>
         <p className='balance'>
-          <span className='bold'>Current Balance: </span>{JSON.stringify(balance)} AR
+          <span className='bold'>Current Balance: </span>
+          <span id='balance'></span> AR
         </p>
 
         <div className='saveTextDiv'>

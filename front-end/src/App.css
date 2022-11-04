@@ -59,11 +59,11 @@
   align-items: center;
   background-color: white;
   color: black;
-  display: none;
-
   width: 200px;
   padding: 50px;
   border-radius: 5px;
+
+  display: none;
 }
 
 .user-picture {
