@@ -10,8 +10,10 @@ function App() {
   const [ JWT, setJWT ] = useState({});
   function handleCallbackResponse(response) {
     var rawJWT = response.credential
+    console.log(rawJWT)
     setJWT(rawJWT)
     var userObject = jwtDecode(response.credential)
+    console.log(userObject)
     setUser(userObject);
     document.getElementById('signInDiv').hidden = true;
     document.getElementById('signInText').hidden = true;
