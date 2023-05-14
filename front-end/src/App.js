@@ -5,16 +5,36 @@ import Arweave from 'arweave';
 import { dataTransaction } from './interactWithAR.js';
 
 
+
+
 function App() {
   const [ user, setUser ] = useState({});
   const [ JWT, setJWT ] = useState({});
-  function handleCallbackResponse(response) {
+  async function handleCallbackResponse(response) {
+
+
+
+
     var rawJWT = response.credential
+
+
+
+
+
+
+
+
+
+
     console.log(rawJWT)
     setJWT(rawJWT)
+    console.log(response)
     var userObject = jwtDecode(response.credential)
     console.log(userObject)
     setUser(userObject);
+
+
+
     document.getElementById('signInDiv').hidden = true;
     document.getElementById('signInText').hidden = true;
     document.getElementById('profile').style.display = 'flex'
@@ -28,15 +48,27 @@ function App() {
     document.getElementById('profile').style.display = 'none'
   }
   useEffect(() => {
+
+
+    // https://openidconnect.googleapis.com/v1/userinfo
+
+
     /* global google */
     google.accounts.id.initialize({
+
       client_id: '452069452454-acvtmk3imjmbpgnrcti5k5vhgqe04t9v.apps.googleusercontent.com',
+      
       callback: handleCallbackResponse
+      
     });
     google.accounts.id.renderButton(
       document.getElementById('signInDiv'), 
       { theme: 'outline', size: 'large' }
     );
+
+
+
+
   }, [])
 
 
@@ -61,39 +93,17 @@ function App() {
       document.getElementById('balance').innerHTML = ar
     });
   });
+
+  
 }
 
 
   const [ clientKey, setKey ] = useState({});
   async function check_key(email) {
-    const url = 'https://lorimer0jwt.pythonanywhere.com/check_key/?email=' + email
-    const response = await fetch(url);
-    const response_json = await response.json();
-    const data = await response_json.response
+    return true
 
 
-    if (data == 'not found') {
-      // generate wallet
-      arweave.wallets.generate().then((key) => {
 
-        async function add_key(email, key) {
-          const key_send_format = JSON.stringify(key)
-          const url = 'https://lorimer0jwt.pythonanywhere.com/add_key/?email=' + email + '&&key=' + key_send_format
-          const response = await fetch(url);
-          const response_json = await response.json();
-          const data = await response_json.response
-        }
-        add_key(email, key)
-        walletData(key, 'noParse')
-        var parsedClientKey = JSON.parse(key)
-        setKey(parsedClientKey)
-      });
-
-    } else {
-      walletData(data, 'yesParse')
-      var parsedClientKey = JSON.parse(data)
-      setKey(parsedClientKey)
-    }
   }
 
 
